@@ -1,4 +1,4 @@
-# Online Quiz Maker 🧠
+# Online Quiz Maker  in Codsoft INTERSHIP 🧠
 
 A premium, interactive platform for creating and taking quizzes. Built with React, Vite, and Framer Motion for a seamless, modern experience.
 

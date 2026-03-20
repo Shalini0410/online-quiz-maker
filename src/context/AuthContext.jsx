@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { userService } from '../services/userService';
 
 const AuthContext = createContext();
 
@@ -7,34 +8,47 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('quiz_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    const currentUser = userService.getCurrentUser();
+    setUser(currentUser);
     setLoading(false);
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('quiz_user', JSON.stringify(userData));
+  const login = (email, password) => {
+    const loggedInUser = userService.login(email, password);
+    if (loggedInUser) {
+      setUser(loggedInUser);
+      return true;
+    }
+    return false;
   };
 
   const register = (userData) => {
-    setUser(userData);
-    localStorage.setItem('quiz_user', JSON.stringify(userData));
-    // In a real app, we'd add to a users list in local storage
-    const users = JSON.parse(localStorage.getItem('quiz_users') || '[]');
-    users.push(userData);
-    localStorage.setItem('quiz_users', JSON.stringify(users));
+    const newUser = {
+      ...userData,
+      id: Date.now().toString(),
+      totalQuizzes: 0,
+      totalScore: 0,
+      bestScore: 0,
+      attempts: []
+    };
+    userService.saveUser(newUser);
+    return login(userData.email, userData.password);
   };
 
   const logout = () => {
+    userService.logout();
     setUser(null);
-    localStorage.removeItem('quiz_user');
+  };
+
+  const updateStats = (score, total) => {
+    if (user) {
+      userService.updateStats(user.id, score, total);
+      setUser(userService.getCurrentUser());
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, updateStats, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

@@ -1,16 +1,49 @@
-# React + Vite
+# Online Quiz Maker 🧠
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, interactive platform for creating and taking quizzes. Built with React, Vite, and Framer Motion for a seamless, modern experience.
 
-Currently, two official plugins are available:
+![Preview](https://raw.githubusercontent.com/Shalini0410/online-quiz-maker/main/preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- **User Authentication**: Secure login and registration.
+- **Quiz Creation**: Multi-step builder with multiple-choice questions.
+- **Interactive Quiz Taking**: Smooth transitions, progress tracking, and instant feedback.
+- **Detailed Results**: Score breakdown and answer review.
+- **Premium UI**: Glassmorphism design, responsive layouts, and elegant animations.
+- **Data Persistence**: Uses LocalStorage for seamless sessions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React (Vite)
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
+- **Styling**: Vanilla CSS (Custom Glassmorphism)
+- **Routing**: React Router DOM
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Shalini0410/online-quiz-maker.git
+   cd online-quiz-maker
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+## 📝 License
+
+This project is open-source and available under the [MIT License](LICENSE).

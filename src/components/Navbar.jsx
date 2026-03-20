@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, PlusCircle, Layout, User } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { LogOut, PlusCircle, Layout, User, Sun, Moon, Shield } from 'lucide-react';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
+    const { isDarkMode, toggleTheme } = useTheme();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -18,27 +20,42 @@ const Navbar = () => {
                 Quiz<span style={{ color: 'var(--primary)' }}>Maker</span>
             </Link>
 
-            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <button
+                    onClick={toggleTheme}
+                    className="btn btn-secondary"
+                    style={{ padding: '0.5rem', border: 'none', background: 'none' }}
+                    title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                >
+                    {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+
                 {user ? (
                     <>
+                        <Link to="/dashboard" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
+                            <Layout size={18} /> Dashboard
+                        </Link>
                         <Link to="/quizzes" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
-                            <Layout size={18} /> Quizzes
+                            Quizzes
+                        </Link>
+                        <Link to="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>
+                            <Shield size={18} /> Admin
                         </Link>
                         <Link to="/create-quiz" className="btn btn-primary" style={{ padding: '0.5rem 1rem' }}>
                             <PlusCircle size={18} /> Create
                         </Link>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: '0.5rem' }}>
                             <User size={18} color="var(--primary)" />
-                            <span>{user.name}</span>
-                            <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', marginLeft: '0.5rem' }}>
+                            <span style={{ fontSize: '0.9rem' }}>{user.name}</span>
+                            <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.5rem' }}>
                                 <LogOut size={18} />
                             </button>
                         </div>
                     </>
                 ) : (
                     <>
-                        <Link to="/login" style={{ color: 'var(--text)', textDecoration: 'none' }}>Login</Link>
-                        <Link to="/register" className="btn btn-primary">Register</Link>
+                        <Link to="/login" className="btn btn-secondary" style={{ padding: '0.5rem 1rem' }}>Login</Link>
+                        <Link to="/register" className="btn btn-primary" style={{ padding: '0.5rem 1rem' }}>Register</Link>
                     </>
                 )}
             </div>

@@ -1,16 +1,26 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Trophy, RefreshCcw, Home as HomeIcon, CheckCircle2, XCircle } from 'lucide-react';
+import { Trophy, RefreshCcw, Home as HomeIcon, CheckCircle2, XCircle, Share2 } from 'lucide-react';
+import Toast from '../components/Toast';
 
 const Results = () => {
     const location = useLocation();
+    const [showToast, setShowToast] = React.useState(false);
     const { score, total, quizTitle, questions, userAnswers } = location.state || { score: 0, total: 0, quizTitle: 'Unknown' };
 
     const percentage = Math.round((score / total) * 100);
 
+    const handleShareScore = () => {
+        const text = `I just scored ${score}/${total} (${percentage}%) on the "${quizTitle}" quiz on QuizMaker! Try it out!`;
+        navigator.clipboard.writeText(text).then(() => {
+            setShowToast(true);
+        });
+    };
+
     return (
         <div className="container" style={{ maxWidth: '900px' }}>
+            {showToast && <Toast message="Score copied to clipboard!" onClose={() => setShowToast(false)} />}
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -32,10 +42,13 @@ const Results = () => {
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                     <Link to="/quizzes" className="btn btn-primary" style={{ padding: '1rem 2rem' }}>
                         <RefreshCcw size={20} /> Try Another
                     </Link>
+                    <button onClick={handleShareScore} className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                        <Share2 size={20} /> Share Score
+                    </button>
                     <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
                         <HomeIcon size={20} /> Go Home
                     </Link>

@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuiz } from '../context/QuizContext';
 import { motion } from 'framer-motion';
-import { Play, User, HelpCircle } from 'lucide-react';
+import { Play, User, HelpCircle, Share2 } from 'lucide-react';
+import Toast from '../components/Toast';
 
 const QuizList = () => {
     const { quizzes } = useQuiz();
+    const [showToast, setShowToast] = useState(false);
+
+    const handleShare = (quizId) => {
+        const url = `${window.location.origin}/online-quiz-maker/#/take-quiz/${quizId}`;
+        navigator.clipboard.writeText(url).then(() => {
+            setShowToast(true);
+        });
+    };
 
     return (
         <div className="container">
+            {showToast && <Toast message="Link copied to clipboard!" onClose={() => setShowToast(false)} />}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -44,9 +54,18 @@ const QuizList = () => {
                                 </span>
                             </div>
 
-                            <Link to={`/take-quiz/${quiz.id}`} className="btn btn-primary" style={{ justifyContent: 'center' }}>
-                                <Play size={18} /> Start Quiz
-                            </Link>
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                <Link to={`/take-quiz/${quiz.id}`} className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>
+                                    <Play size={18} /> Start
+                                </Link>
+                                <button
+                                    onClick={() => handleShare(quiz.id)}
+                                    className="btn btn-secondary"
+                                    style={{ padding: '0.5rem 1rem' }}
+                                >
+                                    <Share2 size={18} />
+                                </button>
+                            </div>
                         </motion.div>
                     ))
                 )}

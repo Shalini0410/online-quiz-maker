@@ -2,7 +2,7 @@
 
 A premium, interactive platform for creating and taking quizzes. Built with React, Vite, and Framer Motion for a seamless, modern experience.
 
-![Preview](https://raw.githubusercontent.com/Shalini0410/online-quiz-maker/main/preview.png)
+![Preview](https://shalini0410.github.io/online-quiz-maker/)
 
 ## ✨ Features
 
